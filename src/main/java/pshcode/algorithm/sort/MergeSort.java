@@ -3,7 +3,9 @@ package pshcode.algorithm.sort;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * 병합정렬.
+ * 병합정렬
+ * 병합된 결과 저장을 위해 추가적인 buffer 메모리 공간이 필요하다.
+ * 최선, 평균, 최악: O(nlogn)
  *
  * @author SungHoon, Park
  */
@@ -29,37 +31,42 @@ public class MergeSort {
 	}
 
 	private static void mergeSortInternal(int[] values, int[] buffer, int start, int middle, int end) {
-		int i = start;
-		int j = middle + 1;
-		int k = start;
-		int t = 0;
+		int firstIndex = start;
+		int secondIndex = middle + 1;
+		int bufferIndex = start;
+		int remainIndex;
 
-		while (i <= middle && j <= end) {
-			if (values[i] <= values[j]) {
-				buffer[k] = values[i];
-				i++;
+		System.out.print(String.format("firstIndex=%d~middle=%d, secondIndex=%d~end=%d", firstIndex, middle, secondIndex, end));
+
+		while (firstIndex <= middle && secondIndex <= end) {
+			if (values[firstIndex] <= values[secondIndex]) {
+				buffer[bufferIndex] = values[firstIndex];
+				firstIndex++;
 			} else {
-				buffer[k] = values[j];
-				j++;
+				buffer[bufferIndex] = values[secondIndex];
+				secondIndex++;
 			}
-			k++;
+
+			bufferIndex++;
 		}
 
-		if (i > middle) {
-			for (t = j; t <= end; t++, k++) {
-				buffer[k] = values[t];
+		//병합하면서 먼저 한쪽의 부분집합이 buffer로 모두 들어갔을 경우, 나머지 부분집합을 buffer로 넣어준다.
+		if (firstIndex > middle) {
+			for (remainIndex = secondIndex; remainIndex <= end; remainIndex++, bufferIndex++) {
+				buffer[bufferIndex] = values[remainIndex];
 			}
 		} else {
-			for (t = i; t <= middle; t++, k++) {
-				buffer[k] = values[t];
+			for (remainIndex = firstIndex; remainIndex <= middle; remainIndex++, bufferIndex++) {
+				buffer[bufferIndex] = values[remainIndex];
 			}
 		}
 
-		for (t = start; t <= end; t++) {
-			values[t] = buffer[t];
+		for (int copyIndex = start; copyIndex <= end; copyIndex++) {
+			values[copyIndex] = buffer[copyIndex];
 		}
 
-		printArray(String.format("middle:%d, i:%d, j:%d, k:%d, t:%d", middle, i, j, k, t) , buffer);
+		printArray("", buffer);
+
 	}
 
 	private static void printArray(String comment, int[] values) {

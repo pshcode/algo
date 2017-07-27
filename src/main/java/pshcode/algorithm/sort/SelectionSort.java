@@ -3,11 +3,14 @@ package pshcode.algorithm.sort;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
- * 선택정렬.
+ * 선택정렬
+ * 최선, 평균, 최악: O(n^2)
  *
  * @author SungHoon, Park
  */
 public class SelectionSort {
+	int[] values;
+
 	public static void main(String[] args) {
 		int[] values = {80, 75, 10, 60, 15, 49, 12, 25};
 
@@ -16,27 +19,31 @@ public class SelectionSort {
 		printArray("End", values);
 	}
 
+	public SelectionSort(int[] values) {
+		this.values = values;
+	}
+
 	private static void selectionSort(int[] values) {
 		int count = values.length;
 
-		for (int i = 0; i < count; i++) {
-			int min = i;
+		for (int firstIndex = 0; firstIndex < count; firstIndex++) {
+			int min = firstIndex;
 			boolean changed = false;
 
-			for (int j = i + 1; j < count; j++) {
-				if (values[j] < values[min]) {
-					min = j;
+			for (int secondIndex = firstIndex + 1; secondIndex < count; secondIndex++) {
+				if (values[secondIndex] < values[min]) {
+					min = secondIndex;
 					changed = true;
 				}
 			}
 
 			if (changed) {
-				int temp = values[i];
-				values[i] = values[min];
+				int temp = values[firstIndex];
+				values[firstIndex] = values[min];
 				values[min] = temp;
 			}
 
-			printArray("Step-" + i, values);
+			printArray("Step-" + firstIndex, values);
 		}
 	}
 
