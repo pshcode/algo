@@ -1,37 +1,34 @@
 package pshcode.algorithm.sort;
 
-import org.apache.commons.lang3.ArrayUtils;
+import lombok.Getter;
 
 /**
- * 퀵정렬
+ * 퀵정렬.
  * 최선, 평균: O(nlogn)
  * 최악: O(n^2)
  *
  * @author SungHoon, Park
  */
 public class QuickSort {
-	public static void main(String[] args) {
-		int[] values = {80, 75, 10, 60, 15, 49, 12, 25};
-		int start = 0;
-		int end = values.length - 1;
+	@Getter
+	int[] values;
 
-		printArray("Start", values);
-		quickSort(values, start, end);
-		printArray("End", values);
+	public QuickSort(int[] values) {
+		this.values = values;
 	}
 
 	/**
 	 * 분할될 때 피벗을 기준으로 좌우측이 없을 경우, start가 end보다 클 수 있다.
 	 */
-	private static void quickSort(int[] values, int start, int end) {
+	public void sort(int start, int end) {
 		if (start < end) {
-			int pivot = partitionQuickSort(values, start, end);
-			quickSort(values, start, pivot - 1);
-			quickSort(values, pivot + 1, end);
+			int pivot = partitionQuickSort(start, end);
+			sort(start, pivot - 1);
+			sort(pivot + 1, end);
 		}
 	}
 
-	private static int partitionQuickSort(int[] values, int start, int end) {
+	private int partitionQuickSort(int start, int end) {
 		int left = start;
 		int right = end;
 		int pivot = end;
@@ -51,8 +48,6 @@ public class QuickSort {
 				values[left] = values[right];
 				values[right] = temp;
 			}
-
-			printArray("Change", values);
 		}
 
 		temp = values[right];
@@ -62,11 +57,7 @@ public class QuickSort {
 		return right;
 	}
 
-	private static boolean notEquals(int left, int right) {
+	private boolean notEquals(int left, int right) {
 		return left != right;
-	}
-
-	private static void printArray(String comment, int[] values) {
-		System.out.println(comment + ":\t" + ArrayUtils.toString(values));
 	}
 }

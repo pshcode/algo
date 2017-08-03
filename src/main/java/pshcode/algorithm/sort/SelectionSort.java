@@ -1,53 +1,38 @@
 package pshcode.algorithm.sort;
 
-import org.apache.commons.lang3.ArrayUtils;
+import lombok.Getter;
 
 /**
- * 선택정렬
+ * 선택정렬.
  * 최선, 평균, 최악: O(n^2)
  *
  * @author SungHoon, Park
  */
 public class SelectionSort {
+	@Getter
 	int[] values;
-
-	public static void main(String[] args) {
-		int[] values = {80, 75, 10, 60, 15, 49, 12, 25};
-
-		printArray("Start", values);
-		selectionSort(values);
-		printArray("End", values);
-	}
 
 	public SelectionSort(int[] values) {
 		this.values = values;
 	}
 
-	private static void selectionSort(int[] values) {
-		int count = values.length;
+	public void sort() {
+		int arraySize = values.length;
 
-		for (int firstIndex = 0; firstIndex < count; firstIndex++) {
-			int min = firstIndex;
-			boolean changed = false;
+		for (int firstIndex = 0; firstIndex < arraySize; firstIndex++) {
+			int minIndex = firstIndex;
 
-			for (int secondIndex = firstIndex + 1; secondIndex < count; secondIndex++) {
-				if (values[secondIndex] < values[min]) {
-					min = secondIndex;
-					changed = true;
+			for (int secondIndex = firstIndex + 1; secondIndex < arraySize; secondIndex++) {
+				if (values[secondIndex] < values[minIndex]) {
+					minIndex = secondIndex;
 				}
 			}
 
-			if (changed) {
+			if (minIndex != firstIndex) {
 				int temp = values[firstIndex];
-				values[firstIndex] = values[min];
-				values[min] = temp;
+				values[firstIndex] = values[minIndex];
+				values[minIndex] = temp;
 			}
-
-			printArray("Step-" + firstIndex, values);
 		}
-	}
-
-	private static void printArray(String comment, int[] values) {
-		System.out.println(comment + ":\t" + ArrayUtils.toString(values));
 	}
 }
