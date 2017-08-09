@@ -1,4 +1,4 @@
-package pshcode.algorithm.hash;
+package pshcode.algorithm.hash.openaddressing;
 
 import org.apache.commons.lang3.StringUtils;
 

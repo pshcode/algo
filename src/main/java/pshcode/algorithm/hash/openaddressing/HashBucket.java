@@ -1,4 +1,4 @@
-package pshcode.algorithm.hash;
+package pshcode.algorithm.hash.openaddressing;
 
 import lombok.Getter;
 import lombok.Setter;
