@@ -1,69 +1,20 @@
 package pshcode.algorithm.shortestpath.dijkstra;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 다익스트라 알고리즘.
+ *
  * @author SungHoon, Park
  */
-public class Dijkstra {
-	private static final int MAX_WEIGHT = 9999;
-
-	private int nodeSize;
-	private List[] adjEdges;
+public class Dijkstra extends ShortestPath {
 	private int[] checked;
 	private int[] distances;
 
 	public Dijkstra(int nodeSize) {
-		this.nodeSize = nodeSize;
-		adjEdges = new List[nodeSize];
+		super(nodeSize);
 		checked = new int[nodeSize];
 		distances = new int[nodeSize];
-	}
-
-	public boolean addEdge(int fromNode, int toNode, int weight) {
-		if (isNotValid(fromNode, toNode)) {
-			return false;
-		}
-
-		List<Edge> edgeList = adjEdges[fromNode];
-
-		if (edgeList == null) {
-			adjEdges[fromNode] = new LinkedList<Edge>();
-			edgeList = adjEdges[fromNode];
-		}
-
-		edgeList.add(new Edge(toNode, weight));
-
-		return true;
-	}
-
-	public Edge getEdge(int fromNode, int toNode) {
-		List<Edge> edgeList = adjEdges[fromNode];
-
-		if (edgeList != null) {
-			for (Edge edge : edgeList) {
-				if (toNode == edge.getToNode()) {
-					return edge;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	private boolean isNotValid(int fromNode, int toNode) {
-		if (fromNode < 0 || fromNode > nodeSize) {
-			System.out.println("잘못된 노드 정보: fromNode=" + fromNode);
-			return true;
-		}
-
-		if (toNode < 0 || toNode > nodeSize) {
-			System.out.println("잘못된 노드 정보: toNode=" + toNode);
-			return true;
-		}
-
-		return false;
 	}
 
 	public void init(int startNode) {

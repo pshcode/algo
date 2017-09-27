@@ -3,6 +3,8 @@ package pshcode.algorithm.shortestpath.dijkstra;
 import lombok.Data;
 
 /**
+ * 간선 Model.
+ * 
  * @author SungHoon, Park
  */
 @Data
