@@ -1,4 +1,4 @@
-package pshcode.algorithm.shortestpath.floyd;
+package pshcode.algorithm.graph.shortestpath.floyd;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

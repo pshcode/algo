@@ -1,4 +1,4 @@
-package pshcode.algorithm.shortestpath.dijkstra;
+package pshcode.algorithm.graph.shortestpath.dijkstra;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

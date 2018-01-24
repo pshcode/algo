@@ -1,7 +1,7 @@
-package pshcode.algorithm.shortestpath.floyd;
+package pshcode.algorithm.graph.shortestpath.floyd;
 
-import pshcode.algorithm.shortestpath.dijkstra.Edge;
-import pshcode.algorithm.shortestpath.dijkstra.ShortestPath;
+import pshcode.algorithm.graph.shortestpath.dijkstra.Edge;
+import pshcode.algorithm.graph.shortestpath.dijkstra.ShortestPath;
 
 /**
  * 플로이드 알고리즘.

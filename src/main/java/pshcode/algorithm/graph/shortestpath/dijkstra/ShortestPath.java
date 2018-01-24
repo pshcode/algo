@@ -1,4 +1,4 @@
-package pshcode.algorithm.shortestpath.dijkstra;
+package pshcode.algorithm.graph.shortestpath.dijkstra;
 
 import java.util.LinkedList;
 import java.util.List;

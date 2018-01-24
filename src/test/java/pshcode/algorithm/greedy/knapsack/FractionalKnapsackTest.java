@@ -76,4 +76,28 @@ class FractionalKnapsackTest {
 		assertEquals(1600, actual);
 		sut.printKnapsackItems();
 	}
+
+	@DisplayName("418 페이지 배낭 최적해 구하기")
+	@Test
+	void sortKnapsackItems2() {
+		//given
+		KnapsackItem knapsackItem1 = new KnapsackItem("물건A", 1, 600);
+		KnapsackItem knapsackItem2 = new KnapsackItem("물건B", 2, 1000);
+		KnapsackItem knapsackItem3 = new KnapsackItem("물건C", 3, 1200);
+
+		//when
+		sut.addKnapsackItem(knapsackItem1);
+		sut.addKnapsackItem(knapsackItem2);
+		sut.addKnapsackItem(knapsackItem3);
+		sut.sortKnapsackItems();
+
+		int actual = sut.calcMaxPrice(5);
+		sut.printKnapsackItems();
+
+		//then
+		//		assertEquals(2200, actual);
+		//		assertEquals("물건A", sut.knapsackItems.get(0).getName());
+		//		assertEquals("물건B", sut.knapsackItems.get(1).getName());
+		//		assertEquals("물건C", sut.knapsackItems.get(2).getName());
+	}
 }
