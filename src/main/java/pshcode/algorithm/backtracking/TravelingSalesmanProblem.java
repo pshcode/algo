@@ -7,8 +7,8 @@ public class TravelingSalesmanProblem {
 	private static final int NUM_OF_NODE = 4;
 	private static final int A = 0;
 
-	private static int BEST_PATH[] = new int[NUM_OF_NODE + 1];
-	private static int MIN_COST = 99999;
+	private static int bestPath[] = new int[NUM_OF_NODE + 1];
+	private static int minCost = 99999;
 
 	public void printPath(int[][] costGraph, int[] path, int minCost) {
 		for (int i = 0; i <= NUM_OF_NODE; i++) {
@@ -32,40 +32,52 @@ public class TravelingSalesmanProblem {
 		return true;
 	}
 
-	public void backTracking(int[][] costGraph, int[] path, int[] bestPath, int step, int nowCost) {
-		int currentNode, nextNode, totalCost;
-
+	public void tspBackTracking(int[][] costGraph, int[] path, int step, int nowCost) {
 		if (isValid(path, step)) {
-			currentNode = path[step];
-
-			if (step == NUM_OF_NODE - 1) {
-				nextNode = path[0];
-				path[step + 1] = nextNode;
-				totalCost = nowCost + costGraph[currentNode][nextNode];
-
-				if (totalCost < MIN_COST) {
-					MIN_COST = totalCost;
-					arrayCopy(path, bestPath);
-					System.out.print("*");
-				}
-
-				printPath(costGraph, bestPath, totalCost);
+			if (isLastNode(step)) {
+				changeTotalCostAndBestPath(costGraph, path, step, nowCost);
 			} else {
-				for (int toNode = 1; toNode < NUM_OF_NODE; toNode++) {
-					nextNode = toNode;
-					path[step + 1] = nextNode;
-					totalCost = nowCost + costGraph[currentNode][nextNode];
-
-					backTracking(costGraph, path, bestPath, step + 1, totalCost);
-				}
+				searchChildNode(costGraph, path, step, nowCost);
 			}
 		}
-
 	}
 
-	public void arrayCopy(int[] originalArr, int[] newArr) {
+	private void searchChildNode(int[][] costGraph, int[] path, int step, int nowCost) {
+		int currentNode = path[step];
+		int nextNode, totalCost;
+
+		for (int toNode = 1; toNode < NUM_OF_NODE; toNode++) {
+			nextNode = toNode;
+			path[step + 1] = nextNode;
+			totalCost = nowCost + costGraph[currentNode][nextNode];
+
+			tspBackTracking(costGraph, path, step + 1, totalCost);
+		}
+	}
+
+	private void changeTotalCostAndBestPath(int[][] costGraph, int[] path, int step, int nowCost) {
+		int currentNode = path[step];
+		int nextNode = path[0];
+		int totalCost = nowCost + costGraph[currentNode][nextNode];
+
+		path[step + 1] = nextNode;
+
+		if (totalCost < minCost) {
+			minCost = totalCost;
+			changeBestPath(path);
+			System.out.print("* ");
+		}
+
+		printPath(costGraph, path, totalCost);
+	}
+
+	private boolean isLastNode(int step) {
+		return step == NUM_OF_NODE - 1;
+	}
+
+	public void changeBestPath(int[] originalArr) {
 		for (int i = 0; i < originalArr.length; i++) {
-			newArr[i] = originalArr[i];
+			bestPath[i] = originalArr[i];
 		}
 	}
 
@@ -81,7 +93,7 @@ public class TravelingSalesmanProblem {
 		path[0] = A;
 
 		TravelingSalesmanProblem travelingSalesmanProblem = new TravelingSalesmanProblem();
-		travelingSalesmanProblem.backTracking(costGraph, path, travelingSalesmanProblem.BEST_PATH, 0, 0);
-		travelingSalesmanProblem.printPath(costGraph, travelingSalesmanProblem.BEST_PATH, travelingSalesmanProblem.MIN_COST);
+		travelingSalesmanProblem.tspBackTracking(costGraph, path, 0, 0);
+		travelingSalesmanProblem.printPath(costGraph, travelingSalesmanProblem.bestPath, travelingSalesmanProblem.minCost);
 	}
 }
