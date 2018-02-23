@@ -8,7 +8,7 @@ public class TravelingSalesmanProblem {
 	private static final int A = 0;
 
 	private static int bestPath[] = new int[NUM_OF_NODE + 1];
-	private static int minCost = 99999;
+	private static int minCost = Integer.MAX_VALUE;
 
 	public void printPath(int[][] costGraph, int[] path, int minCost) {
 		for (int i = 0; i <= NUM_OF_NODE; i++) {
@@ -34,41 +34,32 @@ public class TravelingSalesmanProblem {
 
 	public void tspBackTracking(int[][] costGraph, int[] path, int step, int nowCost) {
 		if (isValid(path, step)) {
+			int currentNode = path[step];
+			int nextNode, totalCost;
+
 			if (isLastNode(step)) {
-				changeTotalCostAndBestPath(costGraph, path, step, nowCost);
+				nextNode = path[0];
+				totalCost = nowCost + costGraph[currentNode][nextNode];
+
+				path[step + 1] = nextNode;
+
+				if (totalCost < minCost) {
+					minCost = totalCost;
+					changeBestPath(path);
+					System.out.print("* ");
+				}
+
+				printPath(costGraph, path, totalCost);
 			} else {
-				searchChildNode(costGraph, path, step, nowCost);
+				for (int toNode = 1; toNode < NUM_OF_NODE; toNode++) {
+					nextNode = toNode;
+					path[step + 1] = nextNode;
+					totalCost = nowCost + costGraph[currentNode][nextNode];
+
+					tspBackTracking(costGraph, path, step + 1, totalCost);
+				}
 			}
 		}
-	}
-
-	private void searchChildNode(int[][] costGraph, int[] path, int step, int nowCost) {
-		int currentNode = path[step];
-		int nextNode, totalCost;
-
-		for (int toNode = 1; toNode < NUM_OF_NODE; toNode++) {
-			nextNode = toNode;
-			path[step + 1] = nextNode;
-			totalCost = nowCost + costGraph[currentNode][nextNode];
-
-			tspBackTracking(costGraph, path, step + 1, totalCost);
-		}
-	}
-
-	private void changeTotalCostAndBestPath(int[][] costGraph, int[] path, int step, int nowCost) {
-		int currentNode = path[step];
-		int nextNode = path[0];
-		int totalCost = nowCost + costGraph[currentNode][nextNode];
-
-		path[step + 1] = nextNode;
-
-		if (totalCost < minCost) {
-			minCost = totalCost;
-			changeBestPath(path);
-			System.out.print("* ");
-		}
-
-		printPath(costGraph, path, totalCost);
 	}
 
 	private boolean isLastNode(int step) {
